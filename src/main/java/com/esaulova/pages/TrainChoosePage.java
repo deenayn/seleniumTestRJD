@@ -1,18 +1,14 @@
 package com.esaulova.pages;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import java.net.URL;
-
-/**
- * Created by user on 08.03.2017.
- */
 public class TrainChoosePage extends BasicPage{
 
-    private String URL = "pass.rzd.ru/tickets/public/ru";
+    private String url = "pass.rzd.ru/tickets/public/ru";
 
     /** Free places in a car */
     private By freePlaces = By.xpath("//div[@class='j-scheme']//*[contains(@class, 's-clickable')]");
@@ -47,47 +43,50 @@ public class TrainChoosePage extends BasicPage{
 
     @Override
     public boolean validateURL() {
-        return driver.getCurrentUrl().contains(this.getURL());
+        return driver.getCurrentUrl().contains(this.getUrl());
+    }
+
+    @Override
+    public String getUrl() {
+        return url;
     }
 
     public TrainChoosePage chooseCarType() {
-        WaitUtilits waitUtilits = new WaitUtilits(driver);
-        waitUtilits.waitWhenElementToBeClickable(carTypeButton);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        waitUtils.waitWhenElementToBeClickable(carTypeButton);
         carTypeButton.click();
         return this;
     }
+
     public TrainChoosePage chooseTime(){
-        WaitUtilits waitUtilits = new WaitUtilits(driver);
-        waitUtilits.waitWhenElementToBeClickable(startTimeButton);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        waitUtils.waitWhenElementToBeClickable(startTimeButton);
         startTimeButton.click();
         move(startTimeButton, Keys.ARROW_UP, 4);
-        waitUtilits.waitWhenElementToBeClickable(endTimeButton);
+        waitUtils.waitWhenElementToBeClickable(endTimeButton);
         endTimeButton.click();
         move(endTimeButton, Keys.ARROW_DOWN, 6);
         return this;
     }
 
     public TrainChoosePage chooseCar() {
-        WaitUtilits waitUtilits = new WaitUtilits(driver);
-        waitUtilits.waitWhenElementToBeClickable(carRadioButton);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        waitUtils.waitWhenElementToBeClickable(carRadioButton);
         carRadioButton.click();
         return this;
     }
 
-    public int numberOfFreePlaces() {
-        WaitUtilits waitUtilits = new WaitUtilits(driver);
-        waitUtilits.waitWhenElementVisible(schemeCars);
+    public int getNumberOfFreePlaces() {
+        WaitUtils waitUtils = new WaitUtils(driver);
+        waitUtils.waitWhenElementVisible(schemeCars);
         return driver.findElements(freePlaces).size();
 
     }
     private WebElement move(WebElement element, Keys key, int n) {
-        for (int i = 0; i<n; i++) {
+        for (int i = 0; i < n; i++) {
             element.sendKeys(key);
         }
         return element;
     }
 
-    public String getURL() {
-        return URL;
-    }
 }

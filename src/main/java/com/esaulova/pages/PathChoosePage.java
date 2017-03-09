@@ -7,40 +7,28 @@ import org.openqa.selenium.support.FindBy;
 
 public class PathChoosePage extends BasicPage {
 
-    private String URL = "pass.rzd.ru/";
+    private String url = "pass.rzd.ru/";
 
-    /**
-     * All Dropdown Lists
-     */
+    /** All Dropdown Lists */
     By dropList = By.className("dropList");
 
-    /**
-     * Field 'Откуда'
-     */
+    /** Field 'Откуда' */
     @FindBy(id = "name0")
     private WebElement departure;
 
-    /**
-     * Field 'Куда'
-     */
+    /** Field 'Куда' */
     @FindBy(id = "name1")
     private WebElement arrival;
 
-    /**
-     * Button 'Купить билет'
-     */
+    /** Button 'Купить билет' */
     @FindBy(id = "Submit")
     private WebElement submitButton;
 
-    /**
-     * Button to open calendar
-     */
+    /** Button to open calendar */
     @FindBy(xpath = "//tr[td/label[text()='Туда']]//div[@class='box-form__datetime__calendar sh_calendar']")
     private WebElement openCalendarButton;
 
-    /**
-     * button to choose tomorrow date
-     */
+    /** button to choose tomorrow date */
     @FindBy(xpath = "//*[@class='select-time days45 near-time'][1]")
     private WebElement dateButton;
 
@@ -50,13 +38,18 @@ public class PathChoosePage extends BasicPage {
 
     @Override
     public PathChoosePage openPage() {
-        driver.get(URL);
+        driver.get(PROTOCOL + url);
         return this;
     }
 
     @Override
     public boolean validateURL() {
-        return driver.getCurrentUrl().contains(URL);
+        return driver.getCurrentUrl().contains(url);
+    }
+
+    @Override
+    public String getUrl() {
+        return url;
     }
 
     public PathChoosePage departureInput(String text) {
@@ -75,8 +68,8 @@ public class PathChoosePage extends BasicPage {
     }
 
     public TrainChoosePage buyTicketClick() {
-        WaitUtilits waitUtilits = new WaitUtilits(driver);
-        waitUtilits.waitWhenElementToBeClickable(submitButton);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        waitUtils.waitWhenElementToBeClickable(submitButton);
         submitButton.click();
         return new TrainChoosePage(driver);
     }
@@ -87,8 +80,8 @@ public class PathChoosePage extends BasicPage {
     }
 
     public PathChoosePage dateClickCalendar() {
-        WaitUtilits waitUtilits = new WaitUtilits(driver);
-        waitUtilits.waitWhenAllElementInvisible(dropList);
+        WaitUtils waitUtils = new WaitUtils(driver);
+        waitUtils.waitWhenAllElementInvisible(dropList);
         dateButton.click();
         return this;
     }
@@ -98,4 +91,4 @@ public class PathChoosePage extends BasicPage {
         return this;
     }
 
- }
+}
